@@ -4,3 +4,8 @@ from django.views.generic import TemplateView
 # com herança para a classe TemplateView
 class IndexView(TemplateView):
     template_name = "paginas/index.html"
+    
+    
+class SobreView(TemplateView):
+    template_name = "paginas/sobre.html"
+    

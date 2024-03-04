@@ -1,6 +1,9 @@
 from django.urls import path
-from .views import IndexView
+# Importe suas views
+from .views import IndexView, SobreView
 
 urlpatterns = [
-    path("inicio/", IndexView.as_view(), name="index"),
+    # Crie suas urls para as views
+    path("", IndexView.as_view(), name="index"),
+    path("sobre/", SobreView.as_view(), name="sobre"),
 ]
