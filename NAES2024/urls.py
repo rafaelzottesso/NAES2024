@@ -21,8 +21,8 @@ urlpatterns = [
     # importa as urls do app 'admin'
     path("admin/", admin.site.urls),
     
-    # importa as urls do app 'paginas'
+    # importa as urls dos apps
     path("", include("paginas.urls") ),
-    
-     
+    path("", include("cadastros.urls") ),
+
 ]
