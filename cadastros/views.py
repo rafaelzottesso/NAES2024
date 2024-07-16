@@ -1,14 +1,14 @@
 from .models import Cidade, Pessoa
 
-from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.list import ListView
 
 from django.urls import reverse_lazy
 
 
 class CidadeCreate(CreateView):
     template_name = 'cadastros/form.html'
-    success_url = reverse_lazy('index') 
+    success_url = reverse_lazy('listar-cidade') 
     model = Cidade
     fields = ['nome', 'estado']
 
@@ -18,10 +18,9 @@ class CidadeCreate(CreateView):
         return dados
         
 
-
 class CidadeUpdate(UpdateView):
     template_name = 'cadastros/form.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('listar-cidade')
     model = Cidade
     fields = ['nome', 'estado']
 
@@ -31,12 +30,23 @@ class CidadeUpdate(UpdateView):
         return dados
 
 
+class CidadadeDelete(DeleteView):
+    template_name = 'cadastros/form-excluir.html'
+    success_url = reverse_lazy('listar-cidade')
+    model = Cidade
+
+
+class CidadeList(ListView):
+    template_name = 'cadastros/list/cidade.html'
+    model = Cidade
+
+
 ##############################################################
 
 
 class PessoaCreate(CreateView):
     template_name = 'cadastros/form.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('listar-pessoa')
     model = Pessoa
     fields = [
         'nome_completo', 'nascimento', 'cpf', 'email',
@@ -51,7 +61,7 @@ class PessoaCreate(CreateView):
 
 class PessoaUpdate(UpdateView):
     template_name = 'cadastros/form.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('listar-pessoa')
     model = Pessoa
     fields = [
         'nome_completo', 'nascimento', 'cpf', 'email',
@@ -62,3 +72,14 @@ class PessoaUpdate(UpdateView):
         dados = super().get_context_data(**kwargs)
         dados['titulo'] = f"Editar registro de {self.object.nome_completo}"
         return dados
+    
+    
+class PessoaDelete(DeleteView):
+    template_name = 'cadastros/form-excluir.html'
+    success_url = reverse_lazy('listar-pessoa')
+    model = Pessoa
+    
+    
+class PessoaList(ListView):
+    template_name = 'cadastros/list/pessoa.html'
+    model = Pessoa
