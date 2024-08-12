@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     
     "paginas.apps.PaginasConfig", # ativar app
     "cadastros.apps.CadastrosConfig", # Ativar app
+    "usuarios.apps.UsuariosConfig", # Ativar app
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+# Configurações de login e logout
+# usar os names das urls
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'login'

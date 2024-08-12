@@ -5,8 +5,10 @@ from django.views.generic.list import ListView
 
 from django.urls import reverse_lazy
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class CidadeCreate(CreateView):
+
+class CidadeCreate(LoginRequiredMixin, CreateView):
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-cidade') 
     model = Cidade
@@ -18,7 +20,7 @@ class CidadeCreate(CreateView):
         return dados
         
 
-class CidadeUpdate(UpdateView):
+class CidadeUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-cidade')
     model = Cidade
@@ -30,13 +32,13 @@ class CidadeUpdate(UpdateView):
         return dados
 
 
-class CidadadeDelete(DeleteView):
+class CidadadeDelete(LoginRequiredMixin, DeleteView):
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-cidade')
     model = Cidade
 
 
-class CidadeList(ListView):
+class CidadeList(LoginRequiredMixin, ListView):
     template_name = 'cadastros/list/cidade.html'
     model = Cidade
 
@@ -44,7 +46,7 @@ class CidadeList(ListView):
 ##############################################################
 
 
-class PessoaCreate(CreateView):
+class PessoaCreate(LoginRequiredMixin, CreateView):
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-pessoa')
     model = Pessoa
@@ -59,7 +61,7 @@ class PessoaCreate(CreateView):
         return dados
     
 
-class PessoaUpdate(UpdateView):
+class PessoaUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-pessoa')
     model = Pessoa
@@ -74,12 +76,12 @@ class PessoaUpdate(UpdateView):
         return dados
     
     
-class PessoaDelete(DeleteView):
+class PessoaDelete(LoginRequiredMixin, DeleteView):
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-pessoa')
     model = Pessoa
     
     
-class PessoaList(ListView):
+class PessoaList(LoginRequiredMixin, ListView):
     template_name = 'cadastros/list/pessoa.html'
     model = Pessoa
