@@ -7,7 +7,7 @@ urlpatterns = [
     # path("entrar/", views.LoginView.as_view(), name="login"),
     
     path("entrar/", views.LoginView.as_view(
-            template_name="cadastros/form.html",
+            template_name="usuarios/form.html",
             extra_context={
                 'titulo' : 'Autenticação de usuários'
             }

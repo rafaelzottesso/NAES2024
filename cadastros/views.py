@@ -6,6 +6,7 @@ from django.views.generic.list import ListView
 from django.urls import reverse_lazy
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from braces.views import GroupRequiredMixin
 
 
 class CidadeCreate(LoginRequiredMixin, CreateView):
@@ -32,10 +33,11 @@ class CidadeUpdate(LoginRequiredMixin, UpdateView):
         return dados
 
 
-class CidadadeDelete(LoginRequiredMixin, DeleteView):
+class CidadadeDelete(GroupRequiredMixin,  DeleteView):
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-cidade')
     model = Cidade
+    group_required = ["Administrador"]
 
 
 class CidadeList(LoginRequiredMixin, ListView):
@@ -76,10 +78,11 @@ class PessoaUpdate(LoginRequiredMixin, UpdateView):
         return dados
     
     
-class PessoaDelete(LoginRequiredMixin, DeleteView):
+class PessoaDelete(GroupRequiredMixin, DeleteView):
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-pessoa')
     model = Pessoa
+    group_required =["Administrador"]
     
     
 class PessoaList(LoginRequiredMixin, ListView):

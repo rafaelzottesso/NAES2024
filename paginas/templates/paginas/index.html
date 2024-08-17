@@ -3,9 +3,23 @@
 {% load static %}
 
 {% block conteudo %}
+
 <h3>Bem Vindos ao sistema</h3>
 
-<h5>{{ titulo }}</h5>
+{% if not request.user.is_authenticated %}
+    <p>
+        Para acessar o sistema, faça o login.
+    </p>
+    <p>
+        <a href="{% url 'login' %}" class="btn btn-success">Login</a>
+    </p>
 
-<p>Em construção!</p>
+{% else %}
+
+    <p>
+        Olá, {{ request.user }}!
+    </p>
+
+{% endif %}
+
 {% endblock %}
