@@ -1,9 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Cidade(models.Model):
     nome = models.CharField(max_length=100)
     estado = models.CharField(max_length=2)
+    ativo = models.BooleanField(default=True)
     
     def __str__(self):
         return f"{self.nome}/{self.estado}"
@@ -22,10 +24,13 @@ class Pessoa(models.Model):
     salario = models.DecimalField(verbose_name="salário",
         decimal_places=2, max_digits=9)
     
+    cidade = models.ForeignKey(Cidade, on_delete=models.PROTECT)
+    
     cadastrado_em = models.DateTimeField(auto_now_add=True)
+    cadastrado_por = models.ForeignKey(User, on_delete=models.PROTECT)
+    
     atualizado_em = models.DateTimeField(auto_now=True)
     
-    cidade = models.ForeignKey(Cidade, on_delete=models.PROTECT)
     
     def __str__(self):
         return f"{self.nome_completo} ({self.cpf})"

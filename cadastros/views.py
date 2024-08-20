@@ -1,3 +1,5 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from .models import Cidade, Pessoa
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -56,6 +58,21 @@ class PessoaCreate(LoginRequiredMixin, CreateView):
         'nome_completo', 'nascimento', 'cpf', 'email',
         'rede_social', 'salario', 'cidade',
     ]
+    
+    def form_valid(self, form):
+        # Antes de criar objeto e salvar no banco
+        form.instance.cadastrado_por = self.request.user
+        
+        url_sucesso = super().form_valid(form)
+        # Depois de criar objeto e salvar no banco
+        
+        # self.object.nome_completo = self.object.nome_completo + "@"
+        # from hashlib import md5
+        # self.object.codigo = md5(self.object.pk)
+        
+        # self.object.save()
+        
+        return url_sucesso
 
     def get_context_data(self, **kwargs):
         dados = super().get_context_data(**kwargs)
@@ -71,6 +88,15 @@ class PessoaUpdate(LoginRequiredMixin, UpdateView):
         'nome_completo', 'nascimento', 'cpf', 'email',
         'rede_social', 'salario', 'cidade',
     ]
+    
+    # Alterar a consulta padrão que retorna o objeto com base no id
+    def get_object(self):
+        pessoa = Pessoa.objects.get(
+            pk=self.kwargs["pk"], 
+            # Além do id, faz um WHERE também com o usuário
+            cadastrado_por=self.request.user 
+        )
+        return pessoa
 
     def get_context_data(self, **kwargs):
         dados = super().get_context_data(**kwargs)
@@ -88,3 +114,8 @@ class PessoaDelete(GroupRequiredMixin, DeleteView):
 class PessoaList(LoginRequiredMixin, ListView):
     template_name = 'cadastros/list/pessoa.html'
     model = Pessoa
+    
+    # Altera a query padrão para consuultar registros (SELECT)
+    def get_queryset(self):
+        query = Pessoa.objects.filter(cadastrado_por=self.request.user)
+        return query
