@@ -20,6 +20,26 @@
         Olá, {{ request.user }}!
     </p>
 
+    <h4>Minhas estatísticas</h4>
+    <ul>
+        <li>Total de pessoas: {{ qtde_pessoas }}</li>
+        <li>Minhas pessoas: {{ m_pessoas }}</li>
+    </ul>
+
+    <hr>
+
+    <ul>
+        {% for c in cidades %}
+            <li>{{ c.nome }}/{{c.estado }}</li>
+        {% empty %}
+            <li>Nenhum registro de cidade</li>
+        {% endfor %}
+
+        {{ queryset }}
+    </ul>
+
+    <h5>Primeira pessoa cadatrada: {{ pessoa.nome_completo }}</h5>
+
 {% endif %}
 
 {% endblock %}
