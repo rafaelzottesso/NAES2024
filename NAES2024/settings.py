@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Ativar apps de complementos
     "crispy_forms",
     "crispy_bootstrap5",
+    "debug_toolbar",
     
     "paginas.apps.PaginasConfig", # ativar app
     "cadastros.apps.CadastrosConfig", # Ativar app
@@ -55,6 +56,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "NAES2024.urls"
@@ -145,3 +148,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'login'
+
+# Configuração do Debug Toolbar
+# Quem pode visualizar a aba dele no navegador
+
+INTERNAL_IPS = [
+    "127.0.0.1"
+]
