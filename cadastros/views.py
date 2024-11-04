@@ -118,7 +118,6 @@ class PessoaList(LoginRequiredMixin, ListView):
     # Altera a query padrão para consuultar registros (SELECT)
     def get_queryset(self):
         query = Pessoa.objects.filter(cadastrado_por=self.request.user)
-        query = query.filter(cidade="Paranavaí")
         query = query.select_related("cidade")
         
         return query
