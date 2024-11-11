@@ -155,3 +155,9 @@ LOGOUT_REDIRECT_URL = 'login'
 INTERNAL_IPS = [
     "127.0.0.1"
 ]
+
+# Configuração de mensagens de notificação
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: "danger",
+}

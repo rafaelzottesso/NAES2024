@@ -10,12 +10,16 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from braces.views import GroupRequiredMixin
 
+# Para usar nas classes
+from django.contrib.messages.views import SuccessMessageMixin
 
-class CidadeCreate(LoginRequiredMixin, CreateView):
+
+class CidadeCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-cidade') 
     model = Cidade
     fields = ['nome', 'estado']
+    success_message = "Cidade %(nome)s adicionada com sucesso!"
 
     def get_context_data(self, **kwargs):
         dados = super().get_context_data(**kwargs)
@@ -23,11 +27,12 @@ class CidadeCreate(LoginRequiredMixin, CreateView):
         return dados
         
 
-class CidadeUpdate(LoginRequiredMixin, UpdateView):
+class CidadeUpdate(LoginRequiredMixin, SuccessMessageMixin,  UpdateView):
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-cidade')
     model = Cidade
     fields = ['nome', 'estado']
+    success_message = "Cidade %(nome)s atualizada!"
 
     def get_context_data(self, **kwargs):
         dados = super().get_context_data(**kwargs)
@@ -35,12 +40,12 @@ class CidadeUpdate(LoginRequiredMixin, UpdateView):
         return dados
 
 
-class CidadadeDelete(GroupRequiredMixin,  DeleteView):
+class CidadadeDelete(GroupRequiredMixin, SuccessMessageMixin,  DeleteView):
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-cidade')
     model = Cidade
     group_required = ["Administrador"]
-
+    success_message = "Cidade excluída!"
 
 class CidadeList(LoginRequiredMixin, ListView):
     template_name = 'cadastros/list/cidade.html'

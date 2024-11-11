@@ -29,4 +29,5 @@ urlpatterns = [
     # Incluir urls do debug toolbar
     path("__debug__/", include("debug_toolbar.urls")),
 
+    # pip install django-debug-toolbar==4.3.0
 ]
