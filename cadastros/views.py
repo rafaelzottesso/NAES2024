@@ -13,6 +13,10 @@ from braces.views import GroupRequiredMixin
 # Para usar nas classes
 from django.contrib.messages.views import SuccessMessageMixin
 
+# Importações para criar filtros de pesquisa
+from django_filters.views import FilterView
+from .filters import PessoaFilter
+
 
 class CidadeCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'cadastros/form.html'
@@ -115,16 +119,19 @@ class PessoaDelete(GroupRequiredMixin, DeleteView):
     model = Pessoa
     group_required =["Administrador"]
     
-    
-class PessoaList(LoginRequiredMixin, ListView):
+
+# Alterar herança de ListView para FilterView    
+class PessoaList(LoginRequiredMixin, FilterView):
     template_name = 'cadastros/list/pessoa.html'
     model = Pessoa
+    paginate_by = 50
+    # Definir a classe criada no filters.py
+    filterset_class = PessoaFilter
     
     # Altera a query padrão para consuultar registros (SELECT)
     def get_queryset(self):
         query = Pessoa.objects.filter(cadastrado_por=self.request.user)
         query = query.select_related("cidade")
-        
         return query
     
     # Quanto a queryset é padrão e não é implementada, faça:

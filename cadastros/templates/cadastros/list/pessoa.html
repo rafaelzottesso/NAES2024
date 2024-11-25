@@ -9,6 +9,10 @@
 
 <hr>
 
+{% include 'cadastros/list/filter_form.html' %}
+
+<hr>
+
 <table class="table table-striped" id="table-lista">
     <thead>
         <th>Nome completo</th>
@@ -22,7 +26,7 @@
         {% for object in object_list %}
             <tr>
                 <td>{{ object.nome_completo }}</td>
-                <td data-sort="{{ object.nascimento|date:"Ymd" }}">{{ object.nascimento|date:"d/m/Y" }}</td>
+                <td data-sort="{{ object.nascimento|date:'Ymd' }}">{{ object.nascimento|date:"d/m/Y" }}</td>
                 <td>{{ object.email }}</td>
                 <td>{{ object.cidade }}</td>
                 <td>{{ object.atualizado_em|date:"d/m/Y \à\s H:i" }}</td>
@@ -66,6 +70,8 @@
             paging: false,
             
         });
+
+        $("input[name*=nascimento]").prop("type", "date");
         
     });
 </script>
